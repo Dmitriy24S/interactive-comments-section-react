@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+import Comment from "./components/Comment";
 
 function App() {
+  const [data, setData] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
+
+  const getData = async () => {
+    const response = await fetch("./data/data.json");
+    const data = await response.json();
+    setData(data.comments);
+    setCurrentUser(data.currentUser);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.map((comment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          currentUser={currentUser}
+          data={data}
+          setData={setData}
+        />
+      ))}
     </div>
   );
 }
