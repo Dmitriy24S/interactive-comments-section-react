@@ -6,7 +6,7 @@ import { ReactComponent as IconEdit } from "../images/icon-edit.svg";
 
 import { useState, useEffect } from "react";
 
-const Reply = ({ reply, updateScore }) => {
+const Reply = ({ reply, updateScore, currentUser }) => {
   const [score, setScore] = useState(reply.score);
   const [votedStatus, setVotedStatus] = useState(false);
   const [upVoted, setUpVoted] = useState(false);
@@ -67,7 +67,12 @@ const Reply = ({ reply, updateScore }) => {
       <article key={reply.id} className="card reply-card">
         <div className="card-top">
           <img src={reply.user.image.png} alt="user-pic" />
-          <div className="username">{reply.user.username}</div>
+          <div className="username">
+            {reply.user.username}
+            {currentUser && reply.user.username === currentUser.username && (
+              <span className="active-user">you</span>
+            )}
+          </div>
           <div className="date">{reply.createdAt}</div>
         </div>
         <div className="comment">
