@@ -128,3 +128,30 @@ textarea {
 .score button {
   padding: 3px;
 }
+/* score voting color */
+.active svg path {
+  fill: #f16c0e;
+}
+.voted {
+  color: #f16c0e;
+}
+/* hover */
+@media (hover) {
+  .score .btn:hover svg path {
+    fill: #5457b6;
+  }
+  .score .btn.active:hover svg path {
+    fill: #d46211;
+  }
+  .add-comment__send-btn:hover {
+    opacity: 0.6;
+  }
+  .btn-container button:hover {
+    opacity: 0.6;
+  }
+  .edit:hover,
+  .delete:hover,
+  .reply:hover {
+    opacity: 0.6;
+  }
+}
