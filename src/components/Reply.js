@@ -97,9 +97,30 @@ const Reply = ({ reply, updateScore, currentUser }) => {
               <IconMinus />
             </button>
           </div>
-          <button className="btn reply">
-            <IconReply /> Reply
-          </button>
+          {currentUser && reply.user.username === currentUser.username ? (
+            <div className="comment-menu">
+              <button
+                className="btn delete"
+                onClick={() => {
+                  // setshowmodal(true);
+                  // setsavedReplyID(reply.id);
+                  // setparentIDSave(parentId);
+                }}
+              >
+                <IconDelete /> Delete
+              </button>
+              <button className="btn edit">
+                <IconEdit /> Edit
+              </button>
+            </div>
+          ) : (
+            <button
+              className="btn reply"
+              // onClick={replyToComment}
+            >
+              <IconReply /> Reply
+            </button>
+          )}
         </div>
       </article>
     </>

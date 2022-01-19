@@ -138,6 +138,19 @@ section {
   background: transparent;
   border: 0;
   cursor: pointer;
+  font-weight: 700;
+}
+/* current user comment menu */
+.comment-menu {
+  display: flex;
+  gap: 1rem;
+  font-weight: 700;
+}
+.delete {
+  color: hsl(358, 79%, 66%);
+}
+.edit {
+  color: hsl(238, 40%, 52%);
 }
 /* add comment form */
 form {
