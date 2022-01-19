@@ -47,8 +47,11 @@ body {
   background-color: white;
   width: 100%;
 }
-.add-comment-container {
-  width: 90%;
+button,
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
 }
 section {
   display: flex;
@@ -64,6 +67,44 @@ section {
   flex-direction: column;
   gap: 1rem;
 }
+/* card-top */
+.card-top {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.card-top img {
+  width: 30px;
+}
+.username {
+  color: hsl(212, 24%, 26%);
+  font-weight: 500;
+}
+.date {
+  color: hsl(211, 10%, 45%);
+  text-align: center;
+}
+/* card-top active user tag */
+.active-user {
+  background: #5457b6;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-left: 10px;
+  padding: 2px 10px 3px;
+}
+/* comment */
+.replying-to {
+  font-weight: 700;
+  color: hsl(238, 40%, 52%);
+  margin-right: 5px;
+}
+.comment {
+  color: hsl(211, 10%, 45%);
+  word-wrap: break-word;
+}
+/* card bottom */
 .card-bottom {
   display: flex;
   justify-content: space-between;
@@ -82,61 +123,55 @@ section {
   justify-content: space-between;
   min-width: 112px;
 }
-.reply {
-  color: hsl(238, 40%, 52%);
-  font-weight: 700;
-}
-.card-top {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-.username {
-  color: hsl(212, 24%, 26%);
-  font-weight: 500;
-}
-.date {
-  color: hsl(211, 10%, 45%);
-  text-align: center;
-}
-.card-top img {
-  width: 30px;
-}
-.replying-to {
-  font-weight: 700;
-  color: hsl(238, 40%, 52%);
-  margin-right: 5px;
-}
-.comment {
-  color: hsl(211, 10%, 45%);
-  word-wrap: break-word;
-}
-button,
-input,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-}
-.btn {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
+/* card bottom - score btns */
 .minus-btn {
   margin-top: -6px;
 }
 .score button {
   padding: 3px;
 }
-/* active user tag */
-.active-user {
-  background: #5457b6;
-  border-radius: 3px;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 400;
-  margin-left: 10px;
-  padding: 2px 10px 3px;
+.reply {
+  color: hsl(238, 40%, 52%);
+  font-weight: 700;
+}
+.btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+/* add comment form */
+form {
+  width: 100%;
+}
+.add-comment-container {
+  width: 90%;
+}
+.add-comment__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+.add-comment__bottom img {
+  width: 30px;
+}
+.add-comment__send-btn {
+  color: white;
+  background-color: hsl(238, 40%, 52%);
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+}
+textarea#reply-text {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 10px;
+  border: 1px solid hsl(223, 19%, 93%);
+  padding: 1rem;
+  resize: none;
+}
+textarea#reply-text:focus {
+  outline: 1.5px solid hsl(238, 40%, 52%);
 }
 /* score voting color */
 .active svg path {
