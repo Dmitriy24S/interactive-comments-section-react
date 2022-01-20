@@ -193,6 +193,59 @@ textarea#reply-text:focus {
 .voted {
   color: #f16c0e;
 }
+/* delete confirmation modal */
+.delete-confirmation-wrapper {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+.delete-confirmation-wrapper .delete-container {
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+}
+.delete-container .title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: hsl(212, 24%, 26%);
+}
+.confirmation-message {
+  color: hsl(211, 10%, 45%);
+}
+.delete-container .btn-container {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: space-between;
+}
+.btn-container button {
+  color: white;
+  border: 0;
+  padding: 1rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.cancel-btn {
+  background-color: hsl(211, 10%, 45%);
+}
+.delete-btn {
+  background-color: hsl(358, 79%, 66%);
+}
 /* hover */
 @media (hover) {
   .score .btn:hover svg path {

@@ -72,6 +72,7 @@ function App() {
           data={data}
           setData={setData}
           updateScore={updateScore}
+          isNullOrWhiteSpace={isNullOrWhiteSpace}
         />
       ))}
       <section className="card add-comment-container">

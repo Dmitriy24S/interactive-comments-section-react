@@ -6,11 +6,24 @@ import { ReactComponent as IconEdit } from "../images/icon-edit.svg";
 
 import { useState, useEffect } from "react";
 
-const Reply = ({ reply, updateScore, currentUser }) => {
+const Reply = ({
+  reply,
+  updateScore,
+  currentUser,
+  parentID,
+  showModal,
+  setShowModal,
+  deleteBtnClick,
+  updateReplies,
+}) => {
   const [score, setScore] = useState(reply.score);
   const [votedStatus, setVotedStatus] = useState(false);
   const [upVoted, setUpVoted] = useState(false);
   const [downVoted, setDownVoted] = useState(false);
+  const [deletionID, setDeletionID] = useState();
+  const [deletionParentID, setDeletionParentID] = useState();
+  const [replyingToReply, setReplyingToReply] = useState(false);
+  const [commentValue, setCommentValue] = useState();
 
   let upVote = () => {
     if (upVoted === false) {
@@ -62,6 +75,17 @@ const Reply = ({ reply, updateScore, currentUser }) => {
     }
   };
 
+  const submitReplyHandler = (e) => {
+    e.preventDefault();
+    updateReplies(commentValue, reply.id, parentID, reply.user.username);
+    setCommentValue("");
+    setReplyingToReply(false);
+  };
+
+  const handleReply = () => {
+    setReplyingToReply(!replyingToReply);
+  };
+
   return (
     <>
       <article key={reply.id} className="card reply-card">
@@ -102,9 +126,9 @@ const Reply = ({ reply, updateScore, currentUser }) => {
               <button
                 className="btn delete"
                 onClick={() => {
-                  // setshowmodal(true);
-                  // setsavedReplyID(reply.id);
-                  // setparentIDSave(parentId);
+                  setShowModal(true);
+                  setDeletionID(reply.id);
+                  setDeletionParentID(parentID);
                 }}
               >
                 <IconDelete /> Delete
@@ -114,15 +138,65 @@ const Reply = ({ reply, updateScore, currentUser }) => {
               </button>
             </div>
           ) : (
-            <button
-              className="btn reply"
-              // onClick={replyToComment}
-            >
+            <button className="btn reply" onClick={handleReply}>
               <IconReply /> Reply
             </button>
           )}
         </div>
       </article>
+
+      {showModal && deletionID !== undefined && (
+        <div className="delete-confirmation-wrapper">
+          <div className="delete-container">
+            <div className="title">Delete comment</div>
+            <div className="confirmation-message">
+              Are you sure you want to delete this comment? This will remove the comment and can't
+              be undone.
+            </div>
+            <div className="btn-container">
+              <button
+                className="cancel-btn"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                No, cancel
+              </button>
+              <button
+                className="delete-btn"
+                onClick={() => {
+                  deleteBtnClick(deletionID, deletionParentID);
+                }}
+              >
+                Yes, delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {replyingToReply && (
+        <section className="card add-reply-container">
+          <form onSubmit={submitReplyHandler}>
+            <div className="add-comment__input">
+              <textarea
+                type="text"
+                name="reply-text"
+                id="reply-text"
+                value={commentValue}
+                onChange={(e) => setCommentValue(e.target.value)}
+                placeholder="Add a comment"
+              />
+            </div>
+            <div className="add-comment__bottom">
+              <img src={currentUser ? currentUser.image.png : null} alt="currentUser-pic" />
+              <button type="submit" className="btn add-comment__send-btn">
+                REPLY
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
     </>
   );
 };
