@@ -139,18 +139,7 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
   return (
     <section key={comment.id}>
       <article className="card">
-        <div className="card-top">
-          <img src={comment.user.image.png} alt="user-pic" />
-          <div className="username">
-            {comment.user.username}
-            {currentUser && comment.user.username === currentUser.username && (
-              <span className="active-user">you</span>
-            )}
-          </div>
-          <div className="date">{comment.createdAt}</div>
-        </div>
-        <div className="comment">{comment.content}</div>
-        <div className="card-bottom">
+        <div className="card-left">
           <div className={`score${votedStatus ? " voted" : ""}`}>
             <button
               className={`btn plus-btn${upVoted ? " active" : ""}`}
@@ -168,27 +157,91 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
               <IconMinus />
             </button>
           </div>
-          {currentUser && comment.user.username === currentUser.username ? (
-            <div className="comment-menu">
+        </div>
+        <div className="card-container">
+          <div className="card-top">
+            <div className="card-top-container">
+              <img src={comment.user.image.png} alt="user-pic" />
+              <div className="username">
+                {comment.user.username}
+                {currentUser && comment.user.username === currentUser.username && (
+                  <span className="active-user">you</span>
+                )}
+              </div>
+              <div className="date">{comment.createdAt}</div>
+            </div>
+            <div className="topmenu">
+              {currentUser && comment.user.username === currentUser.username ? (
+                <div className="comment-menu">
+                  <button
+                    className="btn delete"
+                    onClick={() => {
+                      setShowModal(true);
+                      setDeletionID(comment.id);
+                      setDeletionParentID(comment.id);
+                    }}
+                  >
+                    <IconDelete /> Delete
+                  </button>
+                  <button
+                    className="btn edit"
+                    // onClick={enableEditMode}
+                  >
+                    <IconEdit /> Edit
+                  </button>
+                </div>
+              ) : (
+                <button className="btn reply" onClick={handleCommentReply}>
+                  <IconReply /> Reply
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="comment">
+            <span>{comment.content}</span>
+          </div>
+
+          <div className="card-bottom">
+            <div className={`score${votedStatus ? " voted" : ""}`}>
               <button
-                className="btn delete"
-                onClick={() => {
-                  setShowModal(true);
-                  setDeletionID(comment.id);
-                  setDeletionParentID(comment.id);
-                }}
+                className={`btn plus-btn${upVoted ? " active" : ""}`}
+                onClick={upVote}
+                aria-label="plus-btn"
               >
-                <IconDelete /> Delete
+                <IconPlus />
               </button>
-              <button className="btn edit">
-                <IconEdit /> Edit
+              {comment.score}
+              <button
+                className={`btn minus-btn${downVoted ? " active" : ""}`}
+                onClick={downVote}
+                aria-label="minus-btn"
+              >
+                <IconMinus />
               </button>
             </div>
-          ) : (
-            <button className="btn reply" onClick={handleCommentReply}>
-              <IconReply /> Reply
-            </button>
-          )}
+            {currentUser && comment.user.username === currentUser.username ? (
+              <div className="comment-menu">
+                <button
+                  className="btn delete"
+                  onClick={() => {
+                    setShowModal(true);
+                    setDeletionID(comment.id);
+                    setDeletionParentID(comment.id);
+                  }}
+                >
+                  <IconDelete /> Delete
+                </button>
+                <button className="btn edit">
+                  <IconEdit /> Edit
+                </button>
+              </div>
+            ) : (
+              <button className="btn reply" onClick={handleCommentReply}>
+                <IconReply /> Reply
+              </button>
+            )}
+          </div>
         </div>
       </article>
       <div
@@ -210,6 +263,16 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
               </div>
               <div className="add-comment__bottom">
                 <img src={currentUser ? currentUser.image.png : null} alt="currentUser-pic" />
+                <div className="add-comment__input">
+                  <textarea
+                    type="text"
+                    name="reply-text"
+                    id="reply-text"
+                    value={commentValue}
+                    onChange={(e) => setCommentValue(e.target.value)}
+                    placeholder="Add a comment"
+                  />
+                </div>
                 <button type="submit" className="btn add-comment__send-btn">
                   REPLY
                 </button>
@@ -228,6 +291,7 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
             setShowModal={setShowModal}
             deleteBtnClick={deleteBtnClick}
             updateReplies={updateReplies}
+            // applyCommentEdit={applyCommentEdit}
           />
         ))}
       </div>

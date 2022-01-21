@@ -15,6 +15,7 @@ const Reply = ({
   setShowModal,
   deleteBtnClick,
   updateReplies,
+  applyCommentEdit,
 }) => {
   const [score, setScore] = useState(reply.score);
   const [votedStatus, setVotedStatus] = useState(false);
@@ -75,6 +76,10 @@ const Reply = ({
     }
   };
 
+  const handleReply = () => {
+    setReplyingToReply(!replyingToReply);
+  };
+
   const submitReplyHandler = (e) => {
     e.preventDefault();
     updateReplies(commentValue, reply.id, parentID, reply.user.username);
@@ -82,28 +87,10 @@ const Reply = ({
     setReplyingToReply(false);
   };
 
-  const handleReply = () => {
-    setReplyingToReply(!replyingToReply);
-  };
-
   return (
     <>
       <article key={reply.id} className="card reply-card">
-        <div className="card-top">
-          <img src={reply.user.image.png} alt="user-pic" />
-          <div className="username">
-            {reply.user.username}
-            {currentUser && reply.user.username === currentUser.username && (
-              <span className="active-user">you</span>
-            )}
-          </div>
-          <div className="date">{reply.createdAt}</div>
-        </div>
-        <div className="comment">
-          <span className="replying-to">{`@${reply.replyingTo}`}</span>
-          <span>{reply.content}</span>
-        </div>
-        <div className="card-bottom">
+        <div className="card-left">
           <div className={`score${votedStatus ? " voted" : ""}`}>
             <button
               className={`btn plus-btn${upVoted ? " active" : ""}`}
@@ -121,27 +108,96 @@ const Reply = ({
               <IconMinus />
             </button>
           </div>
-          {currentUser && reply.user.username === currentUser.username ? (
-            <div className="comment-menu">
+        </div>
+        <div className="card-container">
+          <div className="card-top">
+            <div className="card-top-container">
+              <img src={reply.user.image.png} alt="user-pic" />
+              <div className="username">
+                {reply.user.username}
+                {currentUser && reply.user.username === currentUser.username && (
+                  <span className="active-user">you</span>
+                )}
+              </div>
+              <div className="date">{reply.createdAt}</div>
+            </div>
+
+            <div className="topmenu">
+              {currentUser && reply.user.username === currentUser.username ? (
+                <div className="comment-menu">
+                  <button
+                    className="btn delete"
+                    onClick={() => {
+                      setShowModal(true);
+                      setDeletionID(reply.id);
+                      setDeletionParentID(parentID);
+                    }}
+                  >
+                    <IconDelete /> Delete
+                  </button>
+                  <button
+                    className="btn edit"
+                    // onClick={enableEditMode}
+                  >
+                    <IconEdit /> Edit
+                  </button>
+                </div>
+              ) : (
+                <button className="btn reply" onClick={handleReply}>
+                  <IconReply /> Reply
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="comment">
+            <span className="replying-to">{`@${reply.replyingTo}`}</span>
+            <span>{reply.content}</span>
+          </div>
+
+          <div className="card-bottom">
+            <div className={`score${votedStatus ? " voted" : ""}`}>
               <button
-                className="btn delete"
-                onClick={() => {
-                  setShowModal(true);
-                  setDeletionID(reply.id);
-                  setDeletionParentID(parentID);
-                }}
+                className={`btn plus-btn${upVoted ? " active" : ""}`}
+                onClick={upVote}
+                aria-label="plus-btn"
               >
-                <IconDelete /> Delete
+                <IconPlus />
               </button>
-              <button className="btn edit">
-                <IconEdit /> Edit
+              {reply.score}
+              <button
+                className={`btn minus-btn${downVoted ? " active" : ""}`}
+                onClick={downVote}
+                aria-label="minus-btn"
+              >
+                <IconMinus />
               </button>
             </div>
-          ) : (
-            <button className="btn reply" onClick={handleReply}>
-              <IconReply /> Reply
-            </button>
-          )}
+            {currentUser && reply.user.username === currentUser.username ? (
+              <div className="comment-menu">
+                <button
+                  className="btn delete"
+                  onClick={() => {
+                    setShowModal(true);
+                    setDeletionID(reply.id);
+                    setDeletionParentID(parentID);
+                  }}
+                >
+                  <IconDelete /> Delete
+                </button>
+                <button
+                  className="btn edit"
+                  // onClick={enableEditMode}
+                >
+                  <IconEdit /> Edit
+                </button>
+              </div>
+            ) : (
+              <button className="btn reply" onClick={handleReply}>
+                <IconReply /> Reply
+              </button>
+            )}
+          </div>
         </div>
       </article>
 
@@ -190,6 +246,16 @@ const Reply = ({
             </div>
             <div className="add-comment__bottom">
               <img src={currentUser ? currentUser.image.png : null} alt="currentUser-pic" />
+              <div className="add-comment__input">
+                <textarea
+                  type="text"
+                  name="reply-text"
+                  id="reply-text"
+                  value={commentValue}
+                  onChange={(e) => setCommentValue(e.target.value)}
+                  placeholder="Add a comment"
+                />
+              </div>
               <button type="submit" className="btn add-comment__send-btn">
                 REPLY
               </button>

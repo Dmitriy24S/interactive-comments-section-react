@@ -89,6 +89,16 @@ function App() {
           </div>
           <div className="add-comment__bottom">
             <img src={currentUser ? currentUser.image.png : null} alt="currentUser-pic" />
+            <div className="add-comment__input">
+              <textarea
+                type="text"
+                name="reply-text"
+                id="reply-text"
+                value={commentValue}
+                onChange={(e) => setCommentValue(e.target.value)}
+                placeholder="Add a comment"
+              />
+            </div>
             <button type="submit" className="btn add-comment__send-btn">
               SEND
             </button>

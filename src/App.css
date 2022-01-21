@@ -84,6 +84,32 @@ section {
   color: hsl(211, 10%, 45%);
   text-align: center;
 }
+.topmenu {
+  display: none;
+}
+.date {
+  margin-left: auto;
+}
+.add-comment__input {
+  display: inherit;
+}
+.add-comment__bottom .add-comment__input {
+  display: none;
+}
+.card-left {
+  display: none;
+}
+.card-top-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
 /* card-top active user tag */
 .active-user {
   background: #5457b6;
@@ -186,6 +212,24 @@ textarea#reply-text {
 textarea#reply-text:focus {
   outline: 1.5px solid hsl(238, 40%, 52%);
 }
+/* Edit Comment */
+.update-comment__send-btn {
+  color: white;
+  background-color: hsl(238, 40%, 52%);
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  align-self: flex-end;
+}
+.edit-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.7rem;
+}
+.edit-container form textarea#reply-text {
+  min-height: 150px;
+}
 /* score voting color */
 .active svg path {
   fill: #f16c0e;
@@ -264,5 +308,79 @@ textarea#reply-text:focus {
   .delete:hover,
   .reply:hover {
     opacity: 0.6;
+  }
+}
+@media (min-width: 768px) {
+  section {
+    max-width: 44rem;
+  }
+  .card {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.2rem;
+    padding: 1.7rem;
+  }
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.9rem;
+    width: 100%;
+  }
+  .card-top {
+    justify-content: space-between;
+  }
+  .card-top-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .card-left {
+    display: flex;
+  }
+  .topmenu {
+    display: flex;
+  }
+  .date {
+    margin: 0;
+  }
+  .score {
+    flex-direction: column;
+    min-width: 44px;
+    gap: 0.6rem;
+    min-width: 38px;
+  }
+  .card-bottom {
+    display: none;
+  }
+  .reply {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .comment-menu .btn {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .reply-container {
+    margin-left: 25px;
+    padding-left: 25px;
+  }
+  .add-comment__input {
+    display: none;
+  }
+  .add-comment__bottom .add-comment__input {
+    display: flex;
+    width: 100%;
+  }
+  .add-comment__bottom {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: 0;
+  }
+  .btn-container button {
+    padding: 0.7rem 2rem;
   }
 }
