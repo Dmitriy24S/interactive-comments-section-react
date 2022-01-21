@@ -87,6 +87,21 @@ const Reply = ({
     setReplyingToReply(false);
   };
 
+  // Edit comment
+
+  const [editMode, setEditMode] = useState(false);
+
+  const enableEditMode = () => {
+    setEditMode(!editMode);
+    setCommentValue(reply.content);
+  };
+
+  const submitEditHandler = (e) => {
+    e.preventDefault();
+    applyCommentEdit(commentValue, parentID, reply.id);
+    setEditMode(!editMode);
+  };
+
   return (
     <>
       <article key={reply.id} className="card reply-card">
@@ -135,10 +150,7 @@ const Reply = ({
                   >
                     <IconDelete /> Delete
                   </button>
-                  <button
-                    className="btn edit"
-                    // onClick={enableEditMode}
-                  >
+                  <button className="btn edit" onClick={enableEditMode}>
                     <IconEdit /> Edit
                   </button>
                 </div>
@@ -150,10 +162,28 @@ const Reply = ({
             </div>
           </div>
 
-          <div className="comment">
-            <span className="replying-to">{`@${reply.replyingTo}`}</span>
-            <span>{reply.content}</span>
-          </div>
+          {editMode ? (
+            <div className="edit-container">
+              <form onSubmit={submitEditHandler}>
+                <textarea
+                  type="text"
+                  name="reply-text"
+                  id="reply-text"
+                  value={commentValue}
+                  onChange={(e) => setCommentValue(e.target.value)}
+                  placeholder="Add a comment"
+                />
+                <button type="submit" className="btn update-comment__send-btn">
+                  UPDATE
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="comment">
+              <span className="replying-to">{`@${reply.replyingTo}`}</span>
+              <span>{reply.content}</span>
+            </div>
+          )}
 
           <div className="card-bottom">
             <div className={`score${votedStatus ? " voted" : ""}`}>
@@ -185,10 +215,7 @@ const Reply = ({
                 >
                   <IconDelete /> Delete
                 </button>
-                <button
-                  className="btn edit"
-                  // onClick={enableEditMode}
-                >
+                <button className="btn edit" onClick={enableEditMode}>
                   <IconEdit /> Edit
                 </button>
               </div>

@@ -136,6 +136,37 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
     setReplying(false);
   };
 
+  // Edit Comment
+
+  const applyCommentEdit = (newCommentValue, parentID, replyID) => {
+    if (comment.id === parentID) {
+      comment.replies.map((reply) => {
+        if (reply.id === replyID) {
+          reply.content = newCommentValue;
+        }
+      });
+    } else {
+      data.map((comment) => {
+        if (comment.id === replyID) {
+          comment.content = newCommentValue;
+        }
+      });
+    }
+  };
+
+  const [editMode, setEditMode] = useState(false);
+
+  const enableEditMode = () => {
+    setEditMode(!editMode);
+    setCommentValue(comment.content);
+  };
+
+  const submitEditHandler = (e) => {
+    e.preventDefault();
+    applyCommentEdit(commentValue, null, comment.id);
+    setEditMode(!editMode);
+  };
+
   return (
     <section key={comment.id}>
       <article className="card">
@@ -183,10 +214,7 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
                   >
                     <IconDelete /> Delete
                   </button>
-                  <button
-                    className="btn edit"
-                    // onClick={enableEditMode}
-                  >
+                  <button className="btn edit" onClick={enableEditMode}>
                     <IconEdit /> Edit
                   </button>
                 </div>
@@ -198,9 +226,27 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
             </div>
           </div>
 
-          <div className="comment">
-            <span>{comment.content}</span>
-          </div>
+          {editMode ? (
+            <div className="edit-container">
+              <form onSubmit={submitEditHandler}>
+                <textarea
+                  type="text"
+                  name="reply-text"
+                  id="reply-text"
+                  value={commentValue}
+                  onChange={(e) => setCommentValue(e.target.value)}
+                  placeholder="Add a comment"
+                />
+                <button type="submit" className="btn update-comment__send-btn">
+                  UPDATE
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="comment">
+              <span>{comment.content}</span>
+            </div>
+          )}
 
           <div className="card-bottom">
             <div className={`score${votedStatus ? " voted" : ""}`}>
@@ -232,7 +278,7 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
                 >
                   <IconDelete /> Delete
                 </button>
-                <button className="btn edit">
+                <button className="btn edit" onClick={enableEditMode}>
                   <IconEdit /> Edit
                 </button>
               </div>
@@ -291,7 +337,7 @@ const Comment = ({ comment, updateScore, currentUser, data, setData, isNullOrWhi
             setShowModal={setShowModal}
             deleteBtnClick={deleteBtnClick}
             updateReplies={updateReplies}
-            // applyCommentEdit={applyCommentEdit}
+            applyCommentEdit={applyCommentEdit}
           />
         ))}
       </div>
