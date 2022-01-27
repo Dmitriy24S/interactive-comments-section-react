@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# Interactive comments section
+
+![Design preview for Interactive comments section](./design/desktop-preview.jpg)
+
+## Welcome 
+
+Interactive comments section. Created with React and CSS.
+
+[Live Demo](https://dmitriy24s.github.io/interactive-comments-section-react/) 👈
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
